@@ -1,1 +1,22 @@
 
+import fastf1 as ff1
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+ff1.Cache.enable_cache('data/')
+plt.style.use('dark_background')
+
+# Квалификация — лучшие круги без трафика
+session = ff1.get_session(2026, 'Barcelona Grand Prix', 'Q')
+session.load()
+
+rus_lap = session.laps.pick_driver('RUS').pick_quicklaps().iloc[0]
+ant_lap = session.laps.pick_driver('ANT').pick_quicklaps().iloc[0]
+
+rus_tel = rus_lap.get_car_data().add_distance()
+ant_tel = ant_lap.get_car_data().add_distance()
+
+print(f"Рассел — время круга: {rus_lap['LapTime']}")
+print(f"Антонелли — время круга: {ant_lap['LapTime']}")
+print(f"Разница: {rus_lap['LapTime'] - ant_lap['LapTime']}")
